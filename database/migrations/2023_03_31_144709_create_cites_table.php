@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('cites', function (Blueprint $table) {
             $table->id();
+            $table->string("libelle_cite");
+            $table->foreignId("user_id")->constrained("users")->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

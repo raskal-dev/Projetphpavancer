@@ -33,6 +33,10 @@ class User extends Authenticatable
         return $this->belongsTo(Adresses::class);
     }
 
+    public function cite() {
+        return $this->hasMany(Cite::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
