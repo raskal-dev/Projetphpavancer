@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CiteController;
 use App\Http\Controllers\UserAuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +36,15 @@ Route::middleware('prevent-back-history')->group(function () {
         Route::put('profile_user/{user}', [UserAuthController::class, 'update'])->name('update.profile');
         Route::put('profile/{user}', [UserAuthController::class, 'Update_Password'])->name('password.Update');
         Route::delete('profile/{user}', [UserAuthController::class, 'destroy'])->name('user.delete');
+
+        // Cité
+        Route::get('/cite', [CiteController::class, 'index'])->name('cite');
+        Route::post('/cite/save', [CiteController::class, 'store'])->name('cite.save');
+        Route::get('/cite/create', [CiteController::class, 'create'])->name('cite.create');
+        Route::get('/cite/edit/{cite}', [CiteController::class, 'edit'])->name('cite.edit');
+        Route::put('/cite/update/{cite}', [CiteController::class, 'update'])->name('cite.update');
+        Route::delete('/cite/delete/{cite}', [CiteController::class, 'destroy'])->name('cite.delete');
+
     });
 });
 
