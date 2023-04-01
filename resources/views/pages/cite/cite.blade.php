@@ -3,6 +3,9 @@
 @section('content')
     <div class="container-fluid">
         <div class="m-4">
+            <div class="head shadow-lg p-3 mb-5 bg-body-tertiary rounded titrehead">
+                <h1 class="text-center text text-info">Cité</h1>
+            </div>
             <h1 class="h1 text"><span>Cité</span> | <strong>{{ $citecount }}</strong></h1>
             <section>
                 @if(session()->has("success"))

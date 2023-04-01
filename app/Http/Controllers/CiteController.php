@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cite;
+use App\Models\Logement;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -35,7 +36,7 @@ class CiteController extends Controller
         $ss = Cite::all();
         return view('pages.cite.cite', compact(
             'cites',
-        'citecount'
+            'citecount',
         ));
     }
 
@@ -127,7 +128,7 @@ class CiteController extends Controller
     public function destroy(Cite $cite)
     {
         if (DB::table('logements')->where('cite_id', $cite->id)->exists()) {
-            return redirect()->route('cite')->with('errordelete', "Le cité '$cite->libelle_cite' ne peut pas être supprimer car il est encore attaché à un Logement");
+            return redirect()->route('cite')->with('errordelete', "Le cité '$cite->libelle_cite' ne peut pas être supprimer car il est encore attaché à un ou plusieurs Logements");
         } else {
             // Supprimer le cité de la base de données
             $cite->delete();

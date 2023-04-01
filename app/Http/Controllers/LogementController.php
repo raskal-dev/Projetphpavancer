@@ -91,9 +91,15 @@ class LogementController extends Controller
     public function show(Request $request)
     {
         $logementbycites = Logement::orderBy('id', 'desc')->where('cite_id', $request->idcite)->get();
+        $countlog = Logement::where('cite_id', $request->idcite)->count();
         $cite = Cite::where('id', $request->idcite)->first();
         $idcite = $request->idcite;
-        return view('pages.logement.logementcite', compact('logementbycites', 'idcite', 'cite'));
+        return view('pages.logement.logementcite', compact(
+        'logementbycites',
+        'idcite',
+        'cite',
+        'countlog'
+            ));
     }
 
     /**
@@ -108,6 +114,17 @@ class LogementController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Logement  $logement
+     * @return \Illuminate\Http\Response
+     */
+    public function editlogcite(Logement $logement)
+    {
+        return view('pages.logement.logementciteupdate', compact('logement'));
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -117,6 +134,29 @@ class LogementController extends Controller
     public function update(Request $request, Logement $logement)
     {
         //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Logement  $logement
+     * @return \Illuminate\Http\Response
+     */
+    public function updatelogcite(Request $request, Logement $logement)
+    {
+        $request->validate([
+            'num_log' => 'required|string|max:255',
+            'prix' => 'required'
+        ]);
+
+        $logement->update([
+            'num_log' => $request->num_log,
+            'prix' => $request->prix,
+            'cite_id' => $request->cite_id
+        ]);
+
+        return redirect()->route('liste.log', ['idcite' => $request->idcite])->with('success', 'Le logement a été mettre à jour avec success');
     }
 
     /**

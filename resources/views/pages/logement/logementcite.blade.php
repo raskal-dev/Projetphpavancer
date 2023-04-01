@@ -17,6 +17,7 @@
                     </div>
                 @endif
             </section>
+            <h1 class="h1 text"><span>Logement</span> | <strong>{{ $countlog }}</strong></h1>
             <div class="d-flex justify-content-between" mb-4>
                 {{-- {{ $logementbycite->links() }} --}}
                 <div><a href="{{ route('logementcite.create', ['idcite' => $idcite]) }}" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-circle-plus"></i> Ajout</a></div>
@@ -33,11 +34,12 @@
                                     <hr class="hr">
                                     <div class="text-dark fw-bold h5 mb-0">
                                         <span><u>Info</u></span><br>
-                                        <span>#{{ $logementbycite->prix }}</span>
+                                        <span>#{{ $logementbycite->id }}</span><br>
+                                        <span>Prix: {{ $logementbycite->prix }}</span>
 
                                         <hr class="hr">
                                         <span>Action</span><br>
-                                        <a href="#"><i class="fa-regular fa-pen-to-square"></i></a>
+                                        <a href="{{ route('logementcite.edit', ['logement' => $logementbycite->id]) }}"><i class="fa-regular fa-pen-to-square"></i></a>
                                         <span class="p-2"></span>
                                         <span class="text-danger">
                                             <a href="#"><i class="text-danger fa-solid fa-trash-can" onclick="if(confirm('Vous-voulez vraiment supprimer cette cite ?')){document.getElementById('form-{{ $logementbycite->id }}').submit() }"></i></a>

@@ -49,7 +49,9 @@ Route::middleware('prevent-back-history')->group(function () {
         // Logement
         Route::get('/liste/logement/{idcite}', [LogementController::class, 'show'])->name('liste.log');
         Route::post('/logementcite/save', [LogementController::class, 'storelogcite'])->name('logementcite.save');
-        Route::get('/logementcite/logement/{idcite}', [LogementController::class, 'createlogcite'])->name('logementcite.create');
+        Route::get('/logementcite/create/{idcite}', [LogementController::class, 'createlogcite'])->name('logementcite.create');
+        Route::get('/logement/editlogcite/{logement}', [LogementController::class, 'editlogcite'])->name('logementcite.edit');
+        Route::put('/logementcite/updatelogcite/{logement}', [LogementController::class, 'updatelogcite'])->name('logementcite.update');
 
     });
 });
