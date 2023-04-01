@@ -29,6 +29,14 @@
                       </div>
                     </div>
 
+                    <div class="col-md-6">
+                        <label for="superficie" class="form-label">Superficie</label>
+                        <input type="number" class="form-control" name="superficie" id="superficie" value="{{ $cite->superficie }}" required>
+                        <div class="valid-feedback">
+                          Looks good!
+                        </div>
+                      </div>
+
                     <div class="col-12">
                         <button class="btn btn-outline-primary" type="submit">Mettre à jour</button>
                         <span class="px-2"></span>

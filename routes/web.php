@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CiteController;
+use App\Http\Controllers\LogementController;
 use App\Http\Controllers\UserAuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -44,6 +45,11 @@ Route::middleware('prevent-back-history')->group(function () {
         Route::get('/cite/edit/{cite}', [CiteController::class, 'edit'])->name('cite.edit');
         Route::put('/cite/update/{cite}', [CiteController::class, 'update'])->name('cite.update');
         Route::delete('/cite/delete/{cite}', [CiteController::class, 'destroy'])->name('cite.delete');
+
+        // Logement
+        Route::get('/liste/logement/{idcite}', [LogementController::class, 'show'])->name('liste.log');
+        Route::post('/logementcite/save', [LogementController::class, 'storelogcite'])->name('logementcite.save');
+        Route::get('/logementcite/logement/{idcite}', [LogementController::class, 'createlogcite'])->name('logementcite.create');
 
     });
 });

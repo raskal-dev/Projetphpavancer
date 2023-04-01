@@ -205,7 +205,7 @@ class UserAuthController extends Controller
                 ]);
                 return back() -> with('success', 'Password modified');
             } else {
-                return back() -> with('fail', 'Password is incorect');
+                return back() -> with('fail', 'Pasusersword is incorect');
             }
         }
     }

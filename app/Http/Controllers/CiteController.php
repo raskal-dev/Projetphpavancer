@@ -32,6 +32,7 @@ class CiteController extends Controller
         $user = $this->auth->user();
         $citecount = Cite::where('user_id', $user->id)->count();
         $cites = Cite::orderBy("id", "desc")->where('user_id', $user->id)->paginate(8);
+        $ss = Cite::all();
         return view('pages.cite.cite', compact(
             'cites',
         'citecount'
@@ -61,10 +62,12 @@ class CiteController extends Controller
 
         $request->validate([
             'libelle_cite' => 'required|string|max:255',
+            'superficie' => 'required'
         ]);
 
         $cite = Cite::create([
-            'libelle_cite' => $request -> libelle_cite,
+            'libelle_cite' => $request->libelle_cite,
+            'superficie' => $request->superficie,
             'user_id' => $user->id
         ]);
 
@@ -104,10 +107,12 @@ class CiteController extends Controller
     {
         $request->validate([
             'libelle_cite' => 'required|string|max:255',
+            'superficie' => 'required'
         ]);
 
         $cite->update([
-            'libelle_cite' => $request->libelle_cite
+            'libelle_cite' => $request->libelle_cite,
+            'superficie' => $request->superficie
         ]);
 
         return redirect()->route('cite')->with('success', 'La cité a été mettre à jour avec success');
@@ -121,21 +126,14 @@ class CiteController extends Controller
      */
     public function destroy(Cite $cite)
     {
-        // if (DB::table('terrains')->where('cite_id', $cite->id)->exists()) {
-        //     return redirect()->route('cite')->with('errordelete', "Le cité '$cite->libelle_cite' ne peut pas être supprimer car il est encore attaché à une Terrain");
-        // } else {
-        //     // Supprimer le cité de la base de données
-        //     $cite->delete();
-
-        //     // Rediriger l'utilisateur vers la liste des agences avec un message de confirmation
-        //     return redirect()->route('cite')->with('success', "La cité '$cite->libelle_cite' a été supprimer avec success");
-        // }
-
+        if (DB::table('logements')->where('cite_id', $cite->id)->exists()) {
+            return redirect()->route('cite')->with('errordelete', "Le cité '$cite->libelle_cite' ne peut pas être supprimer car il est encore attaché à un Logement");
+        } else {
             // Supprimer le cité de la base de données
             $cite->delete();
 
             // Rediriger l'utilisateur vers la liste des agences avec un message de confirmation
             return redirect()->route('cite')->with('success', "La cité '$cite->libelle_cite' a été supprimer avec success");
-
+        }
     }
 }

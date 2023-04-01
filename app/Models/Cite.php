@@ -11,11 +11,17 @@ class Cite extends Model
 
     protected $fillable = [
         'libelle_cite',
+        'superficie',
         'user_id'
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function logement()
+    {
+        return $this->hasMany(Logement::class);
     }
 }
