@@ -5,20 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Logement extends Model
+class Typevente extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'num_log',
-        'prix',
-        'cite_id'
+        'libelle'
     ];
-
-    public function cite()
-    {
-        return $this->belongsTo(Cite::class);
-    }
 
     public function achat()
     {

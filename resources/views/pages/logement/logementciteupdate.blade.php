@@ -39,7 +39,7 @@
                       </div>
 
                     <div class="col-12">
-                        <button class="btn btn-outline-primary" type="submit">Ajouter</button>
+                        <button class="btn btn-outline-primary" type="submit">Mettre à jour</button>
                         <span class="px-2"></span>
                         {{-- <a href="{{ route('liste.log', ['idcite' => $idcite]) }}" class="btn btn-outline-danger">annuler</a> --}}
                     </div>

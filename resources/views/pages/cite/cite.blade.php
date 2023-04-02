@@ -16,6 +16,10 @@
                     <div class="alert alert-danger">
                         <h4>{{ session()->get('errordelete') }}</h4>
                     </div>
+                @elseif (session()->has("error"))
+                    <div class="alert alert-danger">
+                        <h4>{{ session()->get('error') }}</h4>
+                    </div>
                 @endif
             </section>
             <div class="d-flex justify-content-between" mb-4>

@@ -58,21 +58,27 @@ class CiteController extends Controller
      */
     public function store(Request $request)
     {
-
         $user = $this->auth->user();
 
-        $request->validate([
-            'libelle_cite' => 'required|string|max:255',
-            'superficie' => 'required'
-        ]);
+        $countlog = Cite::whereRaw("libelle_cite = '$request->libelle_cite' AND user_id = $user->id")->count();
+        $cite = Cite::where('id', $request->idcite)->first();
 
-        $cite = Cite::create([
-            'libelle_cite' => $request->libelle_cite,
-            'superficie' => $request->superficie,
-            'user_id' => $user->id
-        ]);
+        if ($countlog > 0) {
+            return redirect()->route('cite')->with('error', "La cité '$request->libelle_cite' existe déjà dans '$user->name'");
+        } else {
+            $request->validate([
+                'libelle_cite' => 'required|string|max:255',
+                'superficie' => 'required'
+            ]);
 
-        return redirect()->route('cite')->with('success', 'La cité a été ajouter avec success');
+            $cite = Cite::create([
+                'libelle_cite' => $request->libelle_cite,
+                'superficie' => $request->superficie,
+                'user_id' => $user->id
+            ]);
+
+            return redirect()->route('cite')->with('success', 'La cité a été ajouter avec success');
+        }
     }
 
     /**
@@ -106,17 +112,27 @@ class CiteController extends Controller
      */
     public function update(Request $request, Cite $cite)
     {
-        $request->validate([
-            'libelle_cite' => 'required|string|max:255',
-            'superficie' => 'required'
-        ]);
 
-        $cite->update([
-            'libelle_cite' => $request->libelle_cite,
-            'superficie' => $request->superficie
-        ]);
+        $user = $this->auth->user();
 
-        return redirect()->route('cite')->with('success', 'La cité a été mettre à jour avec success');
+        $countlog = Cite::whereRaw("libelle_cite = '$request->libelle_cite' AND user_id = $user->id")->count();
+
+        if ($countlog > 0) {
+            return redirect()->route('cite')->with('error', "La cité '$request->libelle_cite' existe déjà dans l'utilisateur: '$user->name'");
+        } else {
+            $request->validate([
+                'libelle_cite' => 'required|string|max:255',
+                'superficie' => 'required'
+            ]);
+
+            $cite->update([
+                'libelle_cite' => $request->libelle_cite,
+                'superficie' => $request->superficie
+            ]);
+
+            return redirect()->route('cite')->with('success', 'La cité a été mettre à jour avec success');
+        }
+
     }
 
     /**

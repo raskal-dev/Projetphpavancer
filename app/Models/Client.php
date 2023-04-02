@@ -5,20 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Logement extends Model
+class Client extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'num_log',
-        'prix',
-        'cite_id'
+        'nom_cli',
+        'prenom_cli',
+        'tel_cli',
+        'email_cli'
     ];
-
-    public function cite()
-    {
-        return $this->belongsTo(Cite::class);
-    }
 
     public function achat()
     {

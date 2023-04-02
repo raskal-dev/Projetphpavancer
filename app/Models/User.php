@@ -37,6 +37,11 @@ class User extends Authenticatable
         return $this->hasMany(Cite::class);
     }
 
+    public function achat()
+    {
+        return $this->hasMany(Achat::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

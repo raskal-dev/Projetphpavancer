@@ -90,15 +90,19 @@ class LogementController extends Controller
      */
     public function show(Request $request)
     {
-        $logementbycites = Logement::orderBy('id', 'desc')->where('cite_id', $request->idcite)->get();
-        $countlog = Logement::where('cite_id', $request->idcite)->count();
+        $logementbycites = Logement::orderBy('id', 'desc')->whereRaw("cite_id = $request->idcite AND isvendu = 0")->get();
+        $countlogtotal = Logement::where('cite_id', $request->idcite)->count();
+        $countlog = Logement::whereRaw("cite_id = $request->idcite AND isvendu = 0")->count();
+        $countlogvendu = Logement::whereRaw("cite_id = $request->idcite AND isvendu = 1")->count();
         $cite = Cite::where('id', $request->idcite)->first();
         $idcite = $request->idcite;
         return view('pages.logement.logementcite', compact(
         'logementbycites',
         'idcite',
         'cite',
-        'countlog'
+        'countlog',
+        'countlogvendu',
+        'countlogtotal'
             ));
     }
 
@@ -145,18 +149,26 @@ class LogementController extends Controller
      */
     public function updatelogcite(Request $request, Logement $logement)
     {
-        $request->validate([
-            'num_log' => 'required|string|max:255',
-            'prix' => 'required'
-        ]);
+        $countlog = Logement::whereRaw("num_log = '$request->num_log' AND cite_id = $request->idcite")->count();
+        $cite = Cite::where('id', $request->idcite)->first();
 
-        $logement->update([
-            'num_log' => $request->num_log,
-            'prix' => $request->prix,
-            'cite_id' => $request->cite_id
-        ]);
+        if ($countlog > 0) {
+            return redirect()->route('liste.log', ['idcite' => $request->idcite])->with('error', "Le logement '$request->num_log' existe déjà dans '$cite->libelle_cite'");
+        } else {
+            $request->validate([
+                'num_log' => 'required|string|max:255',
+                'prix' => 'required'
+            ]);
 
-        return redirect()->route('liste.log', ['idcite' => $request->idcite])->with('success', 'Le logement a été mettre à jour avec success');
+            $logement->update([
+                'num_log' => $request->num_log,
+                'prix' => $request->prix,
+                'cite_id' => $request->cite_id
+            ]);
+
+            return redirect()->route('liste.log', ['idcite' => $request->idcite])->with('success', 'Le logement a été mettre à jour avec success');
+        }
+
     }
 
     /**

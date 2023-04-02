@@ -17,7 +17,7 @@
                     </div>
                 @endif
             </section>
-            <h1 class="h1 text"><span>Logement</span> | <strong>{{ $countlog }}</strong></h1>
+            <h1 class="h1 text"><span>Logement</span> | <span>reste: <strong>{{ $countlog }}</strong></span> | <span>Vendu: <strong>{{ $countlogvendu }}</strong></span> | <span>Total: <strong>{{ $countlogtotal }}</strong></span></h1>
             <div class="d-flex justify-content-between" mb-4>
                 {{-- {{ $logementbycite->links() }} --}}
                 <div><a href="{{ route('logementcite.create', ['idcite' => $idcite]) }}" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-circle-plus"></i> Ajout</a></div>
