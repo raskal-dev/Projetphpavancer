@@ -64,10 +64,10 @@
                         </a>
                     </li>
 
-                    <li>
-                        <a href="#">
-                            <i class='bx bx-bell icon'></i>
-                            <span class="text nav-text">Notifications</span>
+                    <li class="{{ request()->is('achat') ? 'active1' : '' }}">
+                        <a href="{{ route('achat') }}">
+                            <i class='bx bx-wallet icon' ></i>
+                            <span class="text nav-text">Achat</span>
                         </a>
                     </li>
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AchatController;
 use App\Http\Controllers\CiteController;
 use App\Http\Controllers\LogementController;
 use App\Http\Controllers\UserAuthController;
@@ -52,6 +53,12 @@ Route::middleware('prevent-back-history')->group(function () {
         Route::get('/logementcite/create/{idcite}', [LogementController::class, 'createlogcite'])->name('logementcite.create');
         Route::get('/logement/editlogcite/{logement}', [LogementController::class, 'editlogcite'])->name('logementcite.edit');
         Route::put('/logementcite/updatelogcite/{logement}', [LogementController::class, 'updatelogcite'])->name('logementcite.update');
+        Route::delete('/logementcite/deletelogcite/{logement}', [LogementController::class, 'destroylogcite'])->name('logementcite.delete');
+
+        // Achat
+        Route::get('/achat', [AchatController::class, 'show'])->name('achat');
+        Route::post('/achat/save/{logement}', [AchatController::class, 'store'])->name('achat.save');
+        Route::get('/achat/create/{logement}', [AchatController::class, 'create'])->name('achat.create');
 
     });
 });

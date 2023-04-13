@@ -11,6 +11,10 @@
                     <div class="alert alert-success">
                         <h3>{{ session()->get('success') }}</h3>
                     </div>
+                @elseif (session()->has("errordelete"))
+                    <div class="alert alert-danger">
+                        <h4>{{ session()->get('errordelete') }}</h4>
+                    </div>
                 @elseif (session()->has("error"))
                     <div class="alert alert-danger">
                         <h4>{{ session()->get('error') }}</h4>
@@ -39,12 +43,14 @@
 
                                         <hr class="hr">
                                         <span>Action</span><br>
+                                        <a href="{{ route('achat.create', ['logement' => $logementbycite->id]) }}">Buy</a>
+                                        <span class="p-2"></span>
                                         <a href="{{ route('logementcite.edit', ['logement' => $logementbycite->id]) }}"><i class="fa-regular fa-pen-to-square"></i></a>
                                         <span class="p-2"></span>
                                         <span class="text-danger">
                                             <a href="#"><i class="text-danger fa-solid fa-trash-can" onclick="if(confirm('Vous-voulez vraiment supprimer cette cite ?')){document.getElementById('form-{{ $logementbycite->id }}').submit() }"></i></a>
                                         </span>
-                                        <form id="form-{{ $logementbycite->id }}" action="#" method="post">
+                                        <form id="form-{{ $logementbycite->id }}" action="{{ route('logementcite.delete', ['logement' => $logementbycite->id]) }}" method="post">
                                             @csrf
                                             <input type="hidden" name="_method" value="delete">
                                         </form>

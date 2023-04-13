@@ -181,4 +181,19 @@ class LogementController extends Controller
     {
         //
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Logement  $logement
+     * @return \Illuminate\Http\Response
+     */
+    public function destroylogcite(Logement $logement)
+    {
+        // Supprimer le cité de la base de données
+        $logement->delete();
+
+        // Rediriger l'utilisateur vers la liste des agences avec un message de confirmation
+        return back()->with('success', "Le logement '$logement->num_log' a été supprimer avec success");
+    }
 }
