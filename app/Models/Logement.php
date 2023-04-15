@@ -12,7 +12,8 @@ class Logement extends Model
     protected $fillable = [
         'num_log',
         'prix',
-        'cite_id'
+        'cite_id',
+        'isvendu'
     ];
 
     public function cite()

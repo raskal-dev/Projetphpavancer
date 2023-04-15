@@ -40,7 +40,9 @@
                                 <td>{{ $achat->client->nom_cli }} {{ $achat->client->prenom_cli }}</td>
                                 <td>{{ $achat->log_id }}</td>
                                 <td>{{ $achat->typevente->libelle }}</td>
-                                <td>mbola hoavy</td>
+                                <td>
+                                    <button id="print" data-id="{{ $achat->id }}">PDF</button>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -48,4 +50,21 @@
             </div>
         </div>
     </div>
+    <script>
+        $(function(){
+            $(document).on('click', '#print', function(e){
+                e.preventDefault();
+                let id = $(this).attr('data-id');
+                console.log(id);
+
+                $.ajax({
+                    url: `http://127.0.0.1:8000/achat/PDF/${id}`,
+                    type; 'get',
+                    success: function(resp){
+                    }
+                })
+            })
+
+        })
+    </script>
 @endsection

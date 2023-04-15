@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sing In</title>
-    <link rel="stylesheet" href="{{ asset('build/assets/css/style.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('build/assets/css/style.css') }}"> --}}
 
     <script>
         function preventBack() {
@@ -16,12 +16,12 @@
             null
         }
     </script>
-    
+
     @vite(['resources/js/app.js'])
 
 </head>
 <body>
-    <div class="login-box">
+    <div class="container mt-5 justify-content-center">
         <h2>AUTHENTIFICATION</h2>
         <form autocomplete="off" method="POST" action="{{ route('user.login.sign.in') }}">
             @csrf
@@ -46,18 +46,18 @@
             @endif
 
             <br>
-            <div class="user-box">
-                <input type="text" id="email" name="email" value="{{ old('email') }}" required>
+            <div class="col-md-4">
+                <input type="text" id="email" class="form-control" name="email" value="{{ old('email') }}" required>
                 <label for="email">Email</label>
                 <span class="text-danger"><b>@error('email') {{$message}} @enderror</b></span>
             </div>
             <br>
-            <div class="user-box">
-                <input type="password" id="password" name="password" value="{{ old('password') }}" required>
+            <div class="col-md-4">
+                <input type="password" id="password" class="form-control" name="password" value="{{ old('password') }}" required>
                 <label for="password">Password</label>
                 <span class="text-danger"><b>@error('password') {{$message}} @enderror</b></span>
             </div>
-            <button class="btnsub" type="submit">
+            <button class="btn btn-outline-primary mt-4 col-md-4" type="submit">
                 <span></span>
                 <span></span>
                 <span></span>

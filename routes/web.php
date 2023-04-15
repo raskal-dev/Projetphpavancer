@@ -57,8 +57,9 @@ Route::middleware('prevent-back-history')->group(function () {
 
         // Achat
         Route::get('/achat', [AchatController::class, 'show'])->name('achat');
-        Route::post('/achat/save/{logement}', [AchatController::class, 'store'])->name('achat.save');
+        Route::post('/achat/save', [AchatController::class, 'store'])->name('achat.save');
         Route::get('/achat/create/{logement}', [AchatController::class, 'create'])->name('achat.create');
+        Route::get('/achat/PDF/{id}', [AchatController::class, 'printActeDevente'])->name('achat.pdf');
 
     });
 });

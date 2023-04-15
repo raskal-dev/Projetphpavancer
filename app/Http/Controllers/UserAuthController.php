@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Achat;
 use App\Models\Adresses;
+use App\Models\Cite;
+use App\Models\Logement;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -78,10 +81,25 @@ class UserAuthController extends Controller
         //UTILISATION AUHTUSER
         $user = $this->auth->user();
 
+        // count
+        $citetotal = Cite::where('user_id', $user->id)->count();
+        $achattotal = Achat::where('user_id', $user->id)->count();
+        $prixlog = Logement::sum('prix');
+        $countlognovendu = Logement::where('isvendu', 0)->count();
+        $countlogtotal = Logement::count();
+        $plog = ($countlognovendu*100)/$countlogtotal;
+
+
         if(Session::has('user_id_auth')) {
             $data = User::where('id', '=', Session::get('user_id_auth')) -> first();
         }
-        return view('frontend.home', compact('data'));
+        return view('frontend.home', compact(
+            'data',
+            'citetotal',
+            'achattotal',
+            'prixlog',
+            'plog'
+        ));
 
     }
 

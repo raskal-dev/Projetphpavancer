@@ -18,7 +18,7 @@
                         @endif
                     </div>
                 </section>
-                <form class="row g-3 was-validated" novalidate method="post" action="{{ route('achat.save', ['logement' => $log_id]) }}">
+                <form class="row g-3 was-validated" novalidate method="post" action="{{ route('achat.save') }}">
                     @csrf
                     <input type="hidden" name="log_id" value="{{ $log_id }}">
                     <h2 class="text text-info">Client</h2>

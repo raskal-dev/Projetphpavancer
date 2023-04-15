@@ -11,9 +11,8 @@
                 <div class="card-body">
                     <div class="row align-items-center no-gutters">
                         <div class="col me-2">
-                            <div class="text-uppercase text-primary fw-bold text-xs mb-1"><span>Earnings
-                                    (monthly)</span></div>
-                            <div class="text-dark fw-bold h5 mb-0"><span>$40,000</span></div>
+                            <div class="text-uppercase text-primary fw-bold text-xs mb-1"><span>Cites</span></div>
+                            <div class="text-dark fw-bold h5 mb-0"><span>{{ $citetotal }}</span></div>
                         </div>
                         <div class="col-auto"><i class="fas fa-calendar fa-2x text-gray-300"></i></div>
                     </div>
@@ -25,9 +24,8 @@
                 <div class="card-body">
                     <div class="row align-items-center no-gutters">
                         <div class="col me-2">
-                            <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>Earnings
-                                    (annual)</span></div>
-                            <div class="text-dark fw-bold h5 mb-0"><span>$215,000</span></div>
+                            <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>Logement</span></div>
+                            <div class="text-dark fw-bold h5 mb-0"><span>{{ $prixlog }} Ariary</span></div>
                         </div>
                         <div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
                         </div>
@@ -41,16 +39,16 @@
                     <div class="row align-items-center no-gutters">
                         <div class="col me-2">
                             <div class="text-uppercase text-info fw-bold text-xs mb-1">
-                                <span>Tasks</span></div>
+                                <span>Pourcentage de logements vendu</span></div>
                             <div class="row g-0 align-items-center">
                                 <div class="col-auto">
-                                    <div class="text-dark fw-bold h5 mb-0 me-3"><span>50%</span></div>
+                                    <div class="text-dark fw-bold h5 mb-0 me-3"><span>{{ $plog }}%</span></div>
                                 </div>
                                 <div class="col">
                                     <div class="progress progress-sm">
                                         <div class="progress-bar bg-info" aria-valuenow="50"
-                                            aria-valuemin="0" aria-valuemax="100" style="width: 50%;">
-                                            <span class="visually-hidden">50%</span></div>
+                                            aria-valuemin="0" aria-valuemax="100" style="width: {{ $plog }}%;">
+                                            <span class="visually-hidden">{{ $plog }}%</span></div>
                                     </div>
                                 </div>
                             </div>
@@ -66,9 +64,8 @@
                 <div class="card-body">
                     <div class="row align-items-center no-gutters">
                         <div class="col me-2">
-                            <div class="text-uppercase text-warning fw-bold text-xs mb-1"><span>Pending
-                                    Requests</span></div>
-                            <div class="text-dark fw-bold h5 mb-0"><span>18</span></div>
+                            <div class="text-uppercase text-warning fw-bold text-xs mb-1"><span>Achat</span></div>
+                            <div class="text-dark fw-bold h5 mb-0"><span>{{ $achattotal }}</span></div>
                         </div>
                         <div class="col-auto"><i class="fas fa-comments fa-2x text-gray-300"></i></div>
                     </div>

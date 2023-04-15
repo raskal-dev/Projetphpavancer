@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use FPDF;
 use App\Models\Achat;
 use App\Models\Client;
 use App\Models\Logement;
@@ -53,7 +54,7 @@ class AchatController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Logement $logement)
+    public function store(Request $request)
     {
         $user = $this->auth->user();
 
@@ -77,20 +78,20 @@ class AchatController extends Controller
             'email_cli' => $request->email_cli,
         ]);
 
-        $client_teo = Client::orderBy('id', 'desc')->first();
+        $logement = Logement::where('id', '=', $request->log_id)->first();
 
         $achat = Achat::create([
-            'client_id' => $client_teo->id,
-            'log_id' => $request->log_id,
+            'client_id' => $client->id,
+            'log_id' => $logement->id,
             'typevente_id' => $request->typevente_id,
             'user_id' => $user->id
         ]);
 
         $logement->update([
-            'isvendu' => 1
+            'isvendu' => true,
         ]);
 
-        return back()->with('success', "L'achat du logement de '$client_teo->nom_cli $client_teo->prenom_cli' a été fait avec success");
+        return redirect()->route('achat')->with('success', "L'achat du logement de '$client->nom_cli $client->prenom_cli' a été fait avec success");
     }
 
     /**
@@ -138,5 +139,85 @@ class AchatController extends Controller
     public function destroy(Achat $achat)
     {
         //
+    }
+
+    public function printActeDevente(Request $request)
+    {
+        $achat = Achat::where('id', '=', $request->id)->first();
+
+        // $user = $this->auth->user();
+        // $agence = $user->name;
+        // $adresse = $user->adresse->adresse;
+        // $client = $achat->client;
+        // $logement = $achat->logement;
+        // $mode_paye = $achat->typevente->libelle;
+
+        $pdf = new FPDF();
+
+        $pdf->AddPage('P', 'A4', 0);
+
+        $pdf->SetFont('Arial', 'B', 16);
+        $pdf->Cell(0, 10, utf8_decode("Mande v ??"), 0, 0);
+
+
+        // $pdf->Cell(0, 10, utf8_decode("$agence"), 0, 0);
+
+        // $pdf->Cell(-180);
+        // $pdf->Cell(0, 10, utf8_decode("Facture pour $client->nom_cli $client->prenom_cli"), 0, 0);
+
+        // $pdf->Cell(-60);
+        // $pdf->Cell(0, 10, utf8_decode("Adresse: $adresse"), 0, 1);
+
+        // $pdf->Ln(-3);
+
+        // $pdf->SetFont('Arial', 'B', 10);
+        // $pdf->Cell(0, 10, utf8_decode("$adresse"), 0, 1);
+
+        // $_out = "";
+        // for ($i=0; $i < 135; $i++) {
+        //     $_out .= "~";
+        // }
+
+        // $pdf->SetFont('Arial', 'B', 10);
+        // $pdf->Cell(0, 10, utf8_decode("$_out"), 0, 1);
+
+        // $pdf->SetFont('Arial', 'B', 12);
+
+        // $pdf->Cell(0, 10, 'Client:', 0, 1);
+
+        // $pdf->Cell(50, 10, 'Nom:', 0, 0);
+        // $pdf->Cell(0, 10, "$client->nom_cli", 0, 0);
+        // $pdf->Cell(-100);
+        // $pdf->Cell(50, 10, 'Téléphone', 0, 0);
+        // $pdf->Cell(0, 10, $client->tel_cli, 0, 1);
+
+        // $pdf->Cell(50, 10, 'Prenom:', 0, 0);
+        // $pdf->Cell(0, 10, "$client->prenom_cli", 0, 0);
+        // $pdf->Cell(-100);
+        // $pdf->Cell(50, 10, 'Email', 0, 0);
+        // $pdf->Cell(0, 10, "$client->email_cli", 0, 1);
+
+        // $pdf->SetFont('Arial', 'B', 10);
+        // $pdf->Cell(0, 10, utf8_decode("$_out"), 0, 1);
+
+        // $pdf->Ln();
+
+        // $pdf->SetFont('Arial', '', 10);
+
+        // $pdf->Cell(0, 10, 'LOGEMENT:', 0, 1);
+
+        // $pdf->Cell(60, 10, 'NUMERO LOGEMENT', 1, 0, 'C');
+        // $pdf->Cell(50, 10, 'PrixT', 1, 0, 'C');
+
+        // $pdf->Cell(60, 10, utf8_decode("$achat->log_id"), 1, 0, 'C');
+        // $pdf->Cell(50, 10, utf8_decode("$achat->logement->prix MGA"), 1, 1, 'C');
+
+
+
+        $pdf->Ln();
+
+        // $pdf->Cell(0, 10, "Signature", 0, 1, 'R');
+
+    	$pdf->Output();
     }
 }
